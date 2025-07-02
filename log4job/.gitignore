@@ -1,0 +1,7 @@
+# Ignore everything inside output/ and archive/
+output/*
+archive/*
+
+# But keep the directories themselves
+!output/.gitkeep
+!archive/.gitkeep
