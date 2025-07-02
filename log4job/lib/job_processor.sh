@@ -17,13 +17,28 @@ process_job_file() {
     local error_file="$output_dir/${timestamp}_errors.csv"
     local clean_file="$output_dir/${timestamp}_clean.csv"
 
+    # Inside process_job_file, after the while loop begins
+    echo "Processing file: $input_file" >> "$DEBUG_LOG"
     while IFS=',' read -r time name event pid; do
+        echo "Line: $time, $name, $event, $pid" >> "$DEBUG_LOG"
+        # rest of your existing logic
+    done < "$input_file"
+
+    while IFS=',' read -r time name event pid; do
+        # trim whitespace for variables
+        time="$(echo -e "${time}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+        name="$(echo -e "${name}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+        event="$(echo -e "${event}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+        pid="$(echo -e "${pid}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
         key="${name}_${pid}"
 
         if [[ $event == "START" ]]; then
+            echo "START event for $name, $pid" >> "$DEBUG_LOG"
             start_times["$key"]="$time"
             job_names["$key"]="$name"
         elif [[ $event == "END" ]]; then
+            echo "END event for $name, $pid" >> "$DEBUG_LOG"
             start_time="${start_times[$key]}"
             [[ -z "$start_time" ]] && continue
 

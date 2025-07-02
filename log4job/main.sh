@@ -33,6 +33,7 @@ if [[ -n "$1" ]]; then
 else
     # Process all *.log files in input dir
     for FILE in "$INPUT_DIR"/*.log; do
+        echo "Found log file: $FILE" >> "$DEBUG_LOG"
         [[ -e "$FILE" ]] || continue
         BASENAME=$(basename "$FILE" .log)
         echo "📄 Processing $FILE as $BASENAME" >> "$DEBUG_LOG"
