@@ -4,6 +4,11 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/time_utils.sh"
 source "$SCRIPT_DIR/report_writer.sh"
 
+# Helper: trim leading/trailing whitespace
+trim() {
+    echo -e "$1" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
+}
+
 process_job_file() {
     local input_file="$1"
     local output_dir="$2"
@@ -17,30 +22,33 @@ process_job_file() {
     local error_file="$output_dir/${timestamp}_errors.csv"
     local clean_file="$output_dir/${timestamp}_clean.csv"
 
-    # Inside process_job_file, after the while loop begins
     echo "Processing file: $input_file" >> "$DEBUG_LOG"
-    while IFS=',' read -r time name event pid; do
-        echo "Line: $time, $name, $event, $pid" >> "$DEBUG_LOG"
-        # rest of your existing logic
-    done < "$input_file"
 
     while IFS=',' read -r time name event pid; do
-        # trim whitespace for variables
-        time="$(echo -e "${time}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-        name="$(echo -e "${name}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-        event="$(echo -e "${event}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-        pid="$(echo -e "${pid}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+        echo "Raw line: $time, $name, $event, $pid" >> "$DEBUG_LOG"
+
+        # trim whitespace
+        time="$(trim "$time")"
+        name="$(trim "$name")"
+        event="$(trim "$event")"
+        pid="$(trim "$pid")"
 
         key="${name}_${pid}"
 
+        echo "Parsed line: time=$time name=$name event=$event pid=$pid key=$key" >> "$DEBUG_LOG"
+
         if [[ $event == "START" ]]; then
-            echo "START event for $name, $pid" >> "$DEBUG_LOG"
+            echo "START event for key: $key at $time" >> "$DEBUG_LOG"
             start_times["$key"]="$time"
             job_names["$key"]="$name"
+
         elif [[ $event == "END" ]]; then
-            echo "END event for $name, $pid" >> "$DEBUG_LOG"
+            echo "END event for key: $key at $time" >> "$DEBUG_LOG"
             start_time="${start_times[$key]}"
-            [[ -z "$start_time" ]] && continue
+            if [[ -z "$start_time" ]]; then
+                echo "⚠️ No matching START found for key: $key — skipping" >> "$DEBUG_LOG"
+                continue
+            fi
 
             start_sec=$(convert_to_seconds "$start_time")
             end_sec=$(convert_to_seconds "$time")
@@ -49,17 +57,24 @@ process_job_file() {
             duration=$((end_sec - start_sec))
             duration_fmt=$(format_duration "$duration")
 
+            echo "Computed duration for key: $key — $duration seconds ($duration_fmt)" >> "$DEBUG_LOG"
+
             if (( duration > 600 )); then
-                write_report_line "error" "${job_names[$key]}" "$pid" "$start_time" "$time" "$duration_fmt" "$error_file" "$source_file"
+                write_report_line "error"  "${job_names[$key]}" "$pid" "$start_time" "$time" "$duration_fmt" "$error_file" "$source_file"
+                echo "Wrote ERROR record for $key" >> "$DEBUG_LOG"
             elif (( duration > 300 )); then
                 write_report_line "warning" "${job_names[$key]}" "$pid" "$start_time" "$time" "$duration_fmt" "$warning_file" "$source_file"
+                echo "Wrote WARNING record for $key" >> "$DEBUG_LOG"
             else
-                write_report_line "clean" "${job_names[$key]}" "$pid" "$start_time" "$time" "$duration_fmt" "$clean_file" "$source_file"
-                echo ${job_names[$key]}
+                write_report_line "clean"   "${job_names[$key]}" "$pid" "$start_time" "$time" "$duration_fmt" "$clean_file" "$source_file"
+                echo "Wrote CLEAN record for $key" >> "$DEBUG_LOG"
             fi
 
             unset start_times["$key"]
             unset job_names["$key"]
+        else
+            echo "⚠️ Unknown event type: $event for key: $key" >> "$DEBUG_LOG"
         fi
+
     done < "$input_file"
 }
