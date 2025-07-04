@@ -46,7 +46,7 @@ process_job_file() {
             echo "END event for key: $key at $time" >> "$DEBUG_LOG"
             start_time="${start_times[$key]}"
             if [[ -z "$start_time" ]]; then
-                echo "⚠️ No matching START found for key: $key — skipping" >> "$DEBUG_LOG"
+                echo "No matching START found for key: $key — skipping" >> "$DEBUG_LOG"
                 continue
             fi
 
@@ -73,7 +73,7 @@ process_job_file() {
             unset start_times["$key"]
             unset job_names["$key"]
         else
-            echo "⚠️ Unknown event type: $event for key: $key" >> "$DEBUG_LOG"
+            echo "Unknown event type: $event for key: $key" >> "$DEBUG_LOG"
         fi
 
     done < "$input_file"

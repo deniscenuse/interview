@@ -20,14 +20,13 @@ OUTPUT_DIR="$OUTPUT_BASE/$TIMESTAMP"
 mkdir -p "$ARCHIVE_DIR"
 prepare_report_files "$OUTPUT_DIR" "$TIMESTAMP"
 
-# Debug log file (optional)
 DEBUG_LOG="$OUTPUT_DIR/debug.log"
 
 # If argument provided, process only that file
 if [[ -n "$1" ]]; then
     FILE="$1"
     BASENAME=$(basename "$FILE" .log)
-    echo "📄 Processing $FILE as $BASENAME" >> "$DEBUG_LOG"
+    echo "Processing $FILE as $BASENAME" >> "$DEBUG_LOG"
     process_job_file "$FILE" "$OUTPUT_DIR" "$TIMESTAMP" "$BASENAME"
     mv "$FILE" "$ARCHIVE_DIR/"
 else
@@ -36,10 +35,10 @@ else
         echo "Found log file: $FILE" >> "$DEBUG_LOG"
         [[ -e "$FILE" ]] || continue
         BASENAME=$(basename "$FILE" .log)
-        echo "📄 Processing $FILE as $BASENAME" >> "$DEBUG_LOG"
+        echo "Processing $FILE as $BASENAME" >> "$DEBUG_LOG"
         process_job_file "$FILE" "$OUTPUT_DIR" "$TIMESTAMP" "$BASENAME"
         mv "$FILE" "$ARCHIVE_DIR/"
     done
 fi
 
-echo "✅ Reports generated in: $OUTPUT_DIR"
+echo "Reports generated in: $OUTPUT_DIR"
