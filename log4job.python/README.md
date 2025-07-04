@@ -13,17 +13,7 @@ The app generates separate CSV reports for each category in a timestamped output
 
 ## 📂 Project structure
 
-log4job.python/
-├── archive/ # Processed input files are moved here
-├── input/ # Place your .log files here
-├── output/ # Reports are generated here
-├── lib/ # Core logic split into modules
-│ ├── file_utils.py
-│ ├── job_processor.py
-│ ├── report_writer.py
-│ └── time_utils.py
-├── main.py # Entry point
-└── README.md
+<pre> ```text log4job.python/ ├── archive/ # Processed input files are moved here ├── input/ # Place your .log files here ├── output/ # Reports are generated here ├── lib/ # Core logic split into modules │ ├── file_utils.py │ ├── job_processor.py │ ├── report_writer.py │ └── time_utils.py ├── main.py # Entry point └── README.md ``` </pre>
 
 ---
 

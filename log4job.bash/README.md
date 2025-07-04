@@ -9,17 +9,7 @@ The Bash version is aimed at intermediate users who are comfortable in the shell
 
 ## 📂 Project structure
 
-log4job.bash/
-├── archive/ # Processed input files are moved here
-├── input/ # Place your .log files here
-├── output/ # Reports and debug logs are generated here
-├── lib/ # Modular shell functions
-│ ├── file_utils.sh
-│ ├── job_processor.sh
-│ ├── report_writer.sh
-│ └── time_utils.sh
-├── main.sh # Entry point
-└── README.md
+</pre> <pre> ```text log4job.python/ ├── archive/ # Processed input files are moved here ├── input/ # Place your .log files here ├── output/ # Reports are generated here ├── lib/ # Core logic split into modules │ ├── file_utils.py │ ├── job_processor.py │ ├── report_writer.py │ └── time_utils.py ├── main.py # Entry point └── README.md ``` </pre>
 
 ---
 
