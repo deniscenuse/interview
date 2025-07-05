@@ -5,6 +5,7 @@ Hello! My name is **Denis**, and I’m applying for the **DevOps Engineer positi
 I’m a cloud enthusiast and I want to evolve my skills into the DevOps world. 
 
 For this coding exercise, I’ve built two implementations of a **log processing application**: one in **Bash** and one in **Python**. Both applications have reached their final form on the date of 5th of July. 
+
 The task was to analyze log files with `START` and `END` events, calculate job durations, classify them based on thresholds, and generate clean, machine-readable reports.  
 
 ---
