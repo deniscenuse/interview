@@ -2,7 +2,7 @@
 
 Hello! My name is **Denis**, and I’m applying for the **DevOps Engineer position** within the *Engineering Excellence & Productivity (EXP)* team within London Stock Exchange Group.
 
-I’m a cloud enthusiast and I want to evolve my skills into the DevOps world — combining my passion for automation, scripting, and systems engineering to help development teams become more productive and deliver more reliably.  
+I’m a cloud enthusiast and I want to evolve my skills into the DevOps world. 
 
 For this coding exercise, I’ve built two implementations of a **log processing application**: one in **Bash** and one in **Python**.  
 The task was to analyze log files with `START` and `END` events, calculate job durations, classify them based on thresholds, and generate clean, machine-readable reports.  
@@ -22,8 +22,6 @@ I chose to implement both **Bash** and **Python** because they each offer unique
 - Easy to write and maintain even as complexity grows.
 - Better for structured data processing (CSV, JSON).
 - A go-to language for automation beyond basic scripting, and integrates well with cloud SDKs and APIs.
-
-In DevOps work, both are invaluable: Bash for glue scripts, deployment hooks, and one-liners; Python for full-blown automation, monitoring, and infrastructure tooling.
 
 ---
 
