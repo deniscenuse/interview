@@ -42,7 +42,7 @@ log4job.bash/
 ## 🚀 How to run
 
 1️⃣ Make sure you’re on a Unix-like system (Linux, macOS, WSL).  
-2️⃣ Make sure the scripts are executable (`chmod +x main.sh lib/*.sh`).  
+2️⃣ Make sure the scripts are executable (`dos2unix main.sh lib/*.sh`).  
 3️⃣ Place your `.log` files in the `input/` folder.  
    Example line format: 11:35:23,scheduled task 032, START,37980
 
