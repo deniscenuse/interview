@@ -9,7 +9,7 @@ The Bash version is aimed at intermediate users who are comfortable in the shell
 
 ## 📂 Project structure
 
-```bash
+```
 log4job.bash/
 ├── archive/ # Processed input files are moved here
 ├── input/ # Place your .log files here
@@ -21,7 +21,7 @@ log4job.bash/
 │ └── time_utils.sh
 ├── main.sh # Entry point
 └── README.md
-```bash
+```
 
 ---
 
