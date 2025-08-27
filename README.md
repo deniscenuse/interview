@@ -1,8 +1,6 @@
-# Denis-Ionut Cenuse — DevOps Engineer Candidate
+# Denis-Ionut Cenuse
 
-Hello! My name is **Denis**, and I’m applying for the **DevOps Engineer position** within the *Engineering Excellence & Productivity (EXP)* team within London Stock Exchange Group.
-
-I’m a cloud enthusiast and I want to evolve my skills into the DevOps world. 
+Hello! My name is **Denis**, and I’m a cloud enthusiast and I want to evolve my skills into the DevOps world. 
 
 For this coding exercise, I’ve built two implementations of a **log processing application**: one in **Bash** and one in **Python**. Both applications have reached their final form on the date of 5th of July. 
 
